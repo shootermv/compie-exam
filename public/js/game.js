@@ -1,9 +1,9 @@
 /* global Phaser RemotePlayer io */
 Notification.requestPermission();
 var game, gameBegan = false ;
-if(gameBegan) {
-  start();
-}
+
+// start();
+
 
 function start() {
   if(gameBegan) return; // do nothing if already began
