@@ -1,9 +1,11 @@
 /* global Phaser RemotePlayer io */
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render })
-
+var game ;
+function start() {
+  game  = new Phaser.Game(600, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render })
+}
 function preload () {
-  game.load.image('earth', 'assets/light_sand.png')
+  game.load.image('earth', 'assets/sand.png')
   game.load.spritesheet('dude', 'assets/dude.png', 64, 64)
   game.load.spritesheet('enemy', 'assets/dude.png', 64, 64)
 }
@@ -21,12 +23,12 @@ var cursors
 
 function create () {
   socket = io.connect()
-
+  game.stage.backgroundColor = '#fff';
   // Resize our game world to be a 2000 x 2000 square
   game.world.setBounds(-500, -500, 1000, 1000)
 
   // Our tiled scrolling background
-  land = game.add.tileSprite(0, 0, 800, 600, 'earth')
+  land = game.add.tileSprite(-300, -300, 900, 900, 'earth')
   land.fixedToCamera = true
 
   // The base of our player
