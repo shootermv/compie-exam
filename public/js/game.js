@@ -1,7 +1,12 @@
 /* global Phaser RemotePlayer io */
+Notification.requestPermission();
+var game, gameBegan = false ;
+if(gameBegan) {
+  start();
+}
 
-var game ;
 function start() {
+  if(gameBegan) return; // do nothing if already began
   game  = new Phaser.Game(600, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render })
 }
 function preload () {
@@ -25,10 +30,10 @@ function create () {
   socket = io.connect()
   game.stage.backgroundColor = '#fff';
   // Resize our game world to be a 2000 x 2000 square
-  game.world.setBounds(-500, -500, 1000, 1000)
+  game.world.setBounds(0, 0, 600, 600)
 
   // Our tiled scrolling background
-  land = game.add.tileSprite(-300, -300, 900, 900, 'earth')
+  land = game.add.tileSprite(0, 0, 600, 600, 'earth')
   land.fixedToCamera = true
 
   // The base of our player
@@ -106,7 +111,7 @@ function onNewPlayer (data) {
     console.log('Duplicate player!')
     return
   }
-
+  new Notification('New player arrived!',{body:'New player arrived!'})
   // Add new player to the remote players array
   enemies.push(new RemotePlayer(data.id, game, player, data.x, data.y, data.angle))
 }
